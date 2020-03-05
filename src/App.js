@@ -32,8 +32,8 @@ const App = () => {
             <AuthProvider>
                 <Router>
                     <div>
-                         <PrivateRoute exact path="/" component={Dashboard}/>
-                        {/*<Route exact path="/" component={Dashboard}/>*/}
+                         {/*<PrivateRoute exact path="/" component={Dashboard}/>*/}
+                        <Route exact path="/" component={Dashboard}/>
                         <Route exact path="/signup" component={SignUpCool}/>
                         <Route exact path="/login" component={Login}/>
                     </div>
