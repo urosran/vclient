@@ -19,10 +19,9 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import {mainListItems} from '../helperElements/listItems'
 import Button from "@material-ui/core/Button";
 import AddASurveyCollection from "../Modals/AddASurveyCollection";
-import {AuthContext} from "../services/Auth";
+// import {AuthContext} from "../services/Auth";
 import app from "../services/base";
 import firebase from 'firebase/app';
-// import 'firebase/firestore';
 import axios from "axios";
 import SurveyCollectionExpandableList from '../helperElements/SurveyCollectionExpandableList'
 import ListOfQuestions from '../helperElements/ListOfQuestions'
@@ -149,7 +148,7 @@ export default function Dashboard() {
     // const [surveys, setSurveys] = React.useState(null);
     const fixedHeightPaper = clsx(classes.paper, classes.fixedMinHeight);
     const screenWidth = window.screen.width;
-    const {currentUser} = useContext(AuthContext);
+    // const {currentUser} = useContext(AuthContext);
     var user = firebase.auth().currentUser;
     var surveyDataTest = undefined;
     const [surveyQuestions, setSurveyQuestions] = React.useState(null);
