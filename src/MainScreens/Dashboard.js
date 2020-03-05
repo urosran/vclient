@@ -6,7 +6,7 @@ import Drawer from '@material-ui/core/Drawer';
 import Box from '@material-ui/core/Box';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
+// import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
@@ -16,13 +16,13 @@ import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
 import {Menu} from '@material-ui/icons';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import {mainListItems} from '../helperElements/listItems'
+// import {mainListItems} from '../helperElements/listItems'
 import Button from "@material-ui/core/Button";
-import AddASurveyCollection from "../Modals/AddASurveyCollection";
+// import AddASurveyCollection from "../Modals/AddASurveyCollection";
 import app from "../services/base";
 import axios from "axios";
-import SurveyCollectionExpandableList from '../helperElements/SurveyCollectionExpandableList'
-import ListOfQuestions from '../helperElements/ListOfQuestions'
+// import SurveyCollectionExpandableList from '../helperElements/SurveyCollectionExpandableList'
+// import ListOfQuestions from '../helperElements/ListOfQuestions'
 
 function Copyright() {
     return (
@@ -245,7 +245,7 @@ export default function Dashboard() {
                     </IconButton>
                 </div>
                 <Divider/>
-                <List>{mainListItems}</List>
+                {/*<List>{mainListItems}</List>*/}
                 {/*<Divider />*/}
                 {/*<List>{secondaryListItems}</List>*/}
             </Drawer>
@@ -255,10 +255,10 @@ export default function Dashboard() {
                     <Grid container spacing={3}>
                         <Grid item xs={12} md={6} lg={6}>
                             <Typography variant={"h5"} className={classes.columnTitle}> Your Surveys</Typography>
-                                {fetchedCollectionsAndSurveys !== undefined
-                                && <SurveyCollectionExpandableList collectionsAndSurveys={fetchedCollectionsAndSurveys}
-                                                                   setSurveyObject={handleSetSurveyObject}
-                                />}
+                                {/*{fetchedCollectionsAndSurveys !== undefined*/}
+                                {/*&& <SurveyCollectionExpandableList collectionsAndSurveys={fetchedCollectionsAndSurveys}*/}
+                                {/*                                   setSurveyObject={handleSetSurveyObject}*/}
+                                {/*/>}*/}
                         </Grid>
 
                         <Grid item xs={12} md={6} lg={6}>
@@ -275,7 +275,7 @@ export default function Dashboard() {
                             </Typography>
 
                             <Paper className={fixedHeightPaper}>
-                                <ListOfQuestions surveyObject={surveyObject} handleDeleteQuestion={handleDeleteQuestion}/>
+                                {/*<ListOfQuestions surveyObject={surveyObject} handleDeleteQuestion={handleDeleteQuestion}/>*/}
                             </Paper>
                         </Grid>
 
@@ -285,11 +285,11 @@ export default function Dashboard() {
                     </Box>
                 </Container>
             </main>
-            <AddASurveyCollection
-                openModal={openModal}
-                handleClose={handleClose}
-                handleOpen={handleOpen}
-            />
+            {/*<AddASurveyCollection*/}
+            {/*    openModal={openModal}*/}
+            {/*    handleClose={handleClose}*/}
+            {/*    handleOpen={handleOpen}*/}
+            {/*/>*/}
         </div>
     );
 }
