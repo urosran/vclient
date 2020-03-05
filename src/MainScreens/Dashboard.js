@@ -19,9 +19,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import {mainListItems} from '../helperElements/listItems'
 import Button from "@material-ui/core/Button";
 import AddASurveyCollection from "../Modals/AddASurveyCollection";
-// import {AuthContext} from "../services/Auth";
 import app from "../services/base";
-import firebase from 'firebase/app';
 import axios from "axios";
 import SurveyCollectionExpandableList from '../helperElements/SurveyCollectionExpandableList'
 import ListOfQuestions from '../helperElements/ListOfQuestions'
@@ -141,17 +139,11 @@ const useStyles = makeStyles(theme => ({
 export default function Dashboard() {
     const classes = useStyles();
     const [openDrawer, setOpenDrawer] = React.useState(false);
-    const [addedSurveyCollection, setAddedSurveyCollection] = React.useState(false);
     const [openModal, setOpenModal] = React.useState(false);
-    const [question, setQuestion] = React.useState([]);
     const [fetchedCollectionsAndSurveys, setFetchedCollectionsAndSurveys] = React.useState(null);
-    // const [surveys, setSurveys] = React.useState(null);
     const fixedHeightPaper = clsx(classes.paper, classes.fixedMinHeight);
     const screenWidth = window.screen.width;
-    // const {currentUser} = useContext(AuthContext);
-    var user = firebase.auth().currentUser;
-    var surveyDataTest = undefined;
-    const [surveyQuestions, setSurveyQuestions] = React.useState(null);
+    var user = app.auth().currentUser;
     const [surveyObject, setSurveyObject] = React.useState(null);
 
     const handleSetSurveyObject = (surveyObject) => {
