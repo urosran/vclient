@@ -1,35 +1,36 @@
-import React, {useContext, useEffect} from 'react';
+import React from 'react';
 import clsx from 'clsx';
-import {makeStyles} from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
 import Box from '@material-ui/core/Box';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-// import List from '@material-ui/core/List';
+import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
+import Badge from '@material-ui/core/Badge';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
-import {Menu} from '@material-ui/icons';
+import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-// import {mainListItems} from '../helperElements/listItems'
-import Button from "@material-ui/core/Button";
-// import AddASurveyCollection from "../Modals/AddASurveyCollection";
-import app from "../services/base";
-import axios from "axios";
-// import SurveyCollectionExpandableList from '../helperElements/SurveyCollectionExpandableList'
-// import ListOfQuestions from '../helperElements/ListOfQuestions'
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import {mainListItems} from '../helperElements/listItems'
+
+// import { mainListItems, secondaryListItems } from './listItems';
+// import Chart from './Chart';
+// import Deposits from './Deposits';
+// import Orders from './Orders';
 
 function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center">
             {'Copyright © '}
             <Link color="inherit" href="https://material-ui.com/">
-                Beluga
+                Your Website
             </Link>{' '}
             {new Date().getFullYear()}
             {'.'}
@@ -38,6 +39,7 @@ function Copyright() {
 }
 
 const drawerWidth = 240;
+
 const useStyles = makeStyles(theme => ({
     root: {
         display: 'flex',
@@ -46,7 +48,7 @@ const useStyles = makeStyles(theme => ({
         paddingRight: 24, // keep right padding when drawer closed
     },
     toolbarIcon: {
-        // display: 'flex',
+        display: 'flex',
         alignItems: 'center',
         justifyContent: 'flex-end',
         padding: '0 8px',
@@ -75,8 +77,6 @@ const useStyles = makeStyles(theme => ({
     },
     title: {
         flexGrow: 1,
-        fontFamily: 'Comfortaa',
-
     },
     drawerPaper: {
         position: 'relative',
@@ -114,182 +114,94 @@ const useStyles = makeStyles(theme => ({
         overflow: 'auto',
         flexDirection: 'column',
     },
-    modalCustom: {
-        backgroundColor: 'white',
-        margin: 40,
-        padding: 40
+    fixedHeight: {
+        height: 240,
     },
-    fixedMinHeight: {
-        minHeight: 240,
-        marginTop: 10
-    },
-    modal: {
-        borderRadius: 10
-    },
-    addSruveyBtn: {
-        color: 'white',
-        borderColor: 'white'
-    },
-    columnTitle:{
-        fontFamily: 'Comfortaa',
-        margin: 10
-    }
 }));
 
 export default function Dashboard() {
     const classes = useStyles();
-    const [openDrawer, setOpenDrawer] = React.useState(false);
-    const [openModal, setOpenModal] = React.useState(false);
-    const [fetchedCollectionsAndSurveys, setFetchedCollectionsAndSurveys] = React.useState(null);
-    const fixedHeightPaper = clsx(classes.paper, classes.fixedMinHeight);
-    const screenWidth = window.screen.width;
-    var user = app.auth().currentUser;
-    const [surveyObject, setSurveyObject] = React.useState(null);
-
-    const handleSetSurveyObject = (surveyObject) => {
-        // console.log(surveyObject, "survey obj top");
-        setSurveyObject(surveyObject)
-    };
-
-    const handleDeleteQuestion = (question) => {
-        console.log("delete Question")
-    };
-
-    const handleOpen = () => {
-        setOpenModal(true);
-    };
-
-    const handleClose = () => {
-        console.log("called close");
-        setOpenModal(false);
-
-    };
-
+    const [open, setOpen] = React.useState(true);
     const handleDrawerOpen = () => {
-        if (screenWidth > 500) {
-            setOpenDrawer(true)
-        }
+        setOpen(true);
     };
-
     const handleDrawerClose = () => {
-        setOpenDrawer(false);
+        setOpen(false);
     };
-
-    const fetchUserData = () => {
-        return axios({
-            method: "POST",
-            url: "https://beluga-server.herokuapp.com/fetchsurveys",
-            // url: 'http://localhost:5001/fetchsurveys',
-            data: {
-                uuid: user.uid
-            }
-
-        }).then(response => {
-
-            // console.log(response.data, "response");
-            // console.log(typeof (response), "typeof");
-
-            return response.data;
-        })
-            .catch(function (error) {
-                if (error.response) {
-                    console.log("Something went wrong, please try again");
-                }
-            });
-    };
-
-    useEffect(() => {
-        const fetchSurveys = async () => {
-            const collectionsAndSurveys = await fetchUserData();
-            // console.log(collectionsAndSurveys, "collectionsAndSurveys");
-            setFetchedCollectionsAndSurveys(collectionsAndSurveys)
-        };
-        fetchSurveys();
-        // console.log(fetchedCollectionsAndSurveys, "fetchedCollectionsAndSurveys")
-    }, []);
+    const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
     return (
         <div className={classes.root}>
-            <CssBaseline/>
-            <AppBar position="absolute" className={clsx(classes.appBar, openDrawer && classes.appBarShift)}>
+            <CssBaseline />
+            <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
                 <Toolbar className={classes.toolbar}>
-                    {screenWidth > 500 &&
                     <IconButton
                         edge="start"
                         color="inherit"
                         aria-label="open drawer"
                         onClick={handleDrawerOpen}
-                        className={clsx(classes.menuButton, openDrawer && classes.menuButtonHidden)}
+                        className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
                     >
-                        <Menu/>
-                    </IconButton>}
+                        <MenuIcon />
+                    </IconButton>
                     <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-                        EllaQ
+                        Dashboard
                     </Typography>
-                    <Button variant="outlined" className={classes.addSruveyBtn} onClick={handleOpen}>
-                        Add a survey
-                    </Button>
-                    <Button color={'secondary'} onClick={() => app.auth().signOut()}>Sign out</Button>
+                    <IconButton color="inherit">
+                        <Badge badgeContent={4} color="secondary">
+                            <NotificationsIcon />
+                        </Badge>
+                    </IconButton>
                 </Toolbar>
             </AppBar>
             <Drawer
                 variant="permanent"
                 classes={{
-                    paper: clsx(classes.drawerPaper, !openDrawer && classes.drawerPaperClose),
+                    paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
                 }}
-                open={openDrawer}
+                open={open}
             >
                 <div className={classes.toolbarIcon}>
                     <IconButton onClick={handleDrawerClose}>
-                        <ChevronLeftIcon/>
+                        <ChevronLeftIcon />
                     </IconButton>
                 </div>
-                <Divider/>
-                {/*<List>{mainListItems}</List>*/}
-                {/*<Divider />*/}
+                <Divider />
+                <List>{mainListItems}</List>
+                <Divider />
                 {/*<List>{secondaryListItems}</List>*/}
             </Drawer>
             <main className={classes.content}>
-                <div className={classes.appBarSpacer}/>
+                <div className={classes.appBarSpacer} />
                 <Container maxWidth="lg" className={classes.container}>
                     <Grid container spacing={3}>
-                        <Grid item xs={12} md={6} lg={6}>
-                            <Typography variant={"h5"} className={classes.columnTitle}> Your Surveys</Typography>
-                                {/*{fetchedCollectionsAndSurveys !== undefined*/}
-                                {/*&& <SurveyCollectionExpandableList collectionsAndSurveys={fetchedCollectionsAndSurveys}*/}
-                                {/*                                   setSurveyObject={handleSetSurveyObject}*/}
-                                {/*/>}*/}
-                        </Grid>
-
-                        <Grid item xs={12} md={6} lg={6}>
-                            <Typography variant={"h5"} className={classes.columnTitle}>
-                                {surveyObject !== null
-                                && surveyObject !== undefined
-                                && surveyObject.surveyName}
-
-                                {surveyObject == null
-                                && surveyObject === undefined
-                                && "Select A Survey"
-                                }
-
-                            </Typography>
-
+                        {/* Chart */}
+                        <Grid item xs={12} md={8} lg={9}>
                             <Paper className={fixedHeightPaper}>
-                                {/*<ListOfQuestions surveyObject={surveyObject} handleDeleteQuestion={handleDeleteQuestion}/>*/}
+                                {/*<Chart />*/}
+                                chart
                             </Paper>
                         </Grid>
-
+                        {/* Recent Deposits */}
+                        <Grid item xs={12} md={4} lg={3}>
+                            <Paper className={fixedHeightPaper}>
+                                deposits
+                                {/*<Deposits />*/}
+                            </Paper>
+                        </Grid>
+                        {/* Recent Orders */}
+                        <Grid item xs={12}>
+                            <Paper className={classes.paper}>
+                                {/*<Orders />*/}
+                            orders
+                            </Paper>
+                        </Grid>
                     </Grid>
                     <Box pt={4}>
-                        <Copyright/>
+                        <Copyright />
                     </Box>
                 </Container>
             </main>
-            {/*<AddASurveyCollection*/}
-            {/*    openModal={openModal}*/}
-            {/*    handleClose={handleClose}*/}
-            {/*    handleOpen={handleOpen}*/}
-            {/*/>*/}
         </div>
     );
 }
